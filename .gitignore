@@ -1,0 +1,10 @@
+codevember15/Temp/
+codevember15/Library/
+codevember/Obj/
+ 
+*.csproj
+*.unityproj
+*.sln
+*.user
+*.userprefs
+*.DS_store
