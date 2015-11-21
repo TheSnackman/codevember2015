@@ -9,7 +9,7 @@ public class GameLogic : MonoBehaviour {
 	Queue<GameObject> circles = new Queue<GameObject>();
 	int framecount = 0;
 	int circlecount = 0;
-	float spawn_speed = 100;
+	float spawn_speed = 70;
 	bool is_running = false;
 	
 	public void setRunning() {
@@ -31,8 +31,8 @@ public class GameLogic : MonoBehaviour {
 
 				spawnCircle();
 
-				if(spawn_speed > 10)
-					spawn_speed -= 2;
+				if(spawn_speed > 50)
+					spawn_speed -= 1;
 			}
 
 			// check if there is a touchinput hitting
@@ -43,14 +43,15 @@ public class GameLogic : MonoBehaviour {
 				RaycastHit2D hit = Physics2D.Raycast(Input.GetTouch(0).position, Vector2.zero);
 				
 				if(hit.collider != null){
-					Debug.Log(hit.transform.gameObject.name);
+					//Debug.Log(hit.transform.gameObject.name);
 
 					// check wheter hit object is first one in queue
 					GameObject temp = circles.Dequeue();
 
 					if(temp.name.Equals(hit.transform.gameObject.name)) {
-						Debug.Log("right one");
+						//Debug.Log("right one");
 						Destroy (hit.transform.gameObject);
+						// directly spawn new one
 					}
 					else {
 						Debug.Log("wrong one");
