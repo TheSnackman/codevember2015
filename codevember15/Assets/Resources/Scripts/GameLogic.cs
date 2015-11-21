@@ -11,30 +11,24 @@ public class GameLogic : MonoBehaviour {
 	int circlecount = 0;
 	float spawn_speed = 100;
 	bool is_running = false;
-
-	// Use this for initialization
-	void Start () {
-
-	}
 	
+	public void setRunning() {
+		
+		is_running = true;
+	}
+
 	// Update is called once per frame
 	void Update () {
 
 		if(is_running) {
+
 			//every frame wird circle erstellt
 			framecount++;
-
 			if(framecount % 100 == 0)
 				spawnCircle(); 
 
-			// let every circle grow
 
 		}
-	}
-
-	public void setRunning() {
-
-		is_running = true;
 	}
 
 	public void spawnCircle() {

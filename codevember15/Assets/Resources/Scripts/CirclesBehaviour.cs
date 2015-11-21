@@ -21,16 +21,10 @@ public class CirclesBehaviour : MonoBehaviour {
 		int width = Screen.width;
 		int height = Screen.height;
 		circle_transform.Translate(Random.Range(0, width)-0.5f*width, Random.Range(0, height) - 0.5f*height, 0, Space.World);
-		Debug.Log("");
 
-		circle_collider = new CircleCollider2D();
+		gameObject.AddComponent<CircleCollider2D>();
+		circle_collider = gameObject.GetComponent<CircleCollider2D>();
 		circle_collider.radius = start_size;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-
 	}
 
 	// Returns the current score when
@@ -46,14 +40,16 @@ public class CirclesBehaviour : MonoBehaviour {
 		gameObject.name = number.ToString();
 		
 		foreach (Transform child in transform) {
-			if (child.name == "Text"){
+			if (child.name == "Text")
 				child.GetComponent<Text>().text = number.ToString();
-			}
 		}
 	}
 
-	void OnClick() {
+	void OnMouseDown() {
 
-		Destroy(gameObject);
+		if (Input.GetKey ("mouse 0")) {
+			Destroy(gameObject);
+			Debug.Log("Circle has been clicked!");
+		}
 	}
 }
