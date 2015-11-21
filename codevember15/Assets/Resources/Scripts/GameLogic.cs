@@ -17,19 +17,48 @@ public class GameLogic : MonoBehaviour {
 		is_running = true;
 	}
 
+	public Queue<GameObject> getCircles () {
+		return circles;
+	}
+
 	// Update is called once per frame
 	void Update () {
 
 		if(is_running) {
-
-			//every frame wird circle erstellt
 			framecount++;
+			// create a new circle every spawn_speed frame
 			if(framecount % spawn_speed == 0) {
 
-				spawnCircle(); 
+				spawnCircle();
 
 				if(spawn_speed > 10)
-					spawn_speed -= 10;
+					spawn_speed -= 2;
+			}
+
+			// check if there is a touchinput hitting
+			if (Input.touchCount == 1) {
+				Debug.Log ("touchinput");
+				
+				//Vector3 pos = Camera.main.ViewportToScreenPoint(Input.GetTouch(0).position);
+				RaycastHit2D hit = Physics2D.Raycast(Input.GetTouch(0).position, Vector2.zero);
+				
+				if(hit.collider != null){
+					Debug.Log(hit.transform.gameObject.name);
+
+					// check wheter hit object is first one in queue
+					GameObject temp = circles.Dequeue();
+
+					if(temp.name.Equals(hit.transform.gameObject.name)) {
+						Debug.Log("right one");
+						Destroy (hit.transform.gameObject);
+					}
+					else {
+						Debug.Log("wrong one");
+					}
+					
+					
+				}
+				
 			}
 
 
@@ -43,6 +72,6 @@ public class GameLogic : MonoBehaviour {
 		temp.name = circlecount.ToString();
 		temp.GetComponent<CirclesBehaviour>().setNumber(circlecount);
 		circles.Enqueue(temp);
-		Debug.Log(circles.Dequeue());
+		//Debug.Log(circles.Dequeue());
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CirclesBehaviour : MonoBehaviour {
 	
@@ -21,7 +22,10 @@ public class CirclesBehaviour : MonoBehaviour {
 
 		int width = Screen.width;
 		int height = Screen.height;
-		circle_transform.Translate(Random.Range(0, width)-0.5f*width, Random.Range(0, height) - 0.5f*height, 0, Space.World);
+		int circleHeight = 30;
+		circle_transform.Translate(-Random.Range(0, width), -Random.Range(0, height)-circleHeight, 0, Space.World);
+		//circle_transform.Translate(Random.Range(0, width)-0.8f*width, Random.Range(0, height) -0.8f*height, 0, Space.World);
+		//Debug.Log((Random.Range(0, width)-0.5f*width )+ " " + (Random.Range(0, height) - 0.5f*height));
 
 		gameObject.AddComponent<CircleCollider2D>();
 		circle_collider = gameObject.GetComponent<CircleCollider2D>();
@@ -48,17 +52,5 @@ public class CirclesBehaviour : MonoBehaviour {
 
 	void Update() {
 
-		if (Input.touchCount == 1) {
-
-			Debug.Log ("there is a touch");
-
-			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-			RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
-			if(hit.collider != null) {
-				Destroy (gameObject);
-			}
-				
-		}
 	}
-	
 }
