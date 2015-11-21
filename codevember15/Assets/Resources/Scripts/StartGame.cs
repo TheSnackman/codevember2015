@@ -5,12 +5,15 @@ public class StartGame : MonoBehaviour {
 
 	public GameObject menu;
 	public GameObject game_manager;
+	public GameObject score;
 	GameObject buttonAnimated;
 	bool activated;
 
 	void Start() {
-		
+		GameObject.Find ("Score").SetActive(false);
+		buttonAnimated = GameObject.Find("StartButton");
 		buttonAnimated.GetComponent<Animator>().enabled = false;
+		GameObject.Find ("GameOverBox").SetActive(false);
 	}
 
 	// animation
@@ -22,6 +25,7 @@ public class StartGame : MonoBehaviour {
 			buttonAnimated.GetComponent<Animator>().cullingMode = AnimatorCullingMode.AlwaysAnimate;
 			
 			yield return new WaitForSeconds(1);
+			score.SetActive(true);
 			game_manager.GetComponent<GameLogic>().setRunning();
 		}
 		menu.SetActive(activated);
@@ -31,7 +35,6 @@ public class StartGame : MonoBehaviour {
 	public void Run(bool active) {
 
 		activated = active;
-		buttonAnimated = GameObject.Find("StartButton");
 		StartCoroutine(WaitForAnimation());
 	}
 }

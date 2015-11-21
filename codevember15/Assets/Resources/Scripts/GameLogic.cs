@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class GameLogic : MonoBehaviour {
 	
+	public AudioClip loop;
 	public GameObject circles_container;
 	GameObject temp;
 	Queue<GameObject> circles = new Queue<GameObject>();
@@ -12,9 +13,22 @@ public class GameLogic : MonoBehaviour {
 	int spawn_speed = 70;
 	int next_spawn = 70;
 	bool is_running = false;
-	
+
+	// play some music
+	IEnumerator Start() {
+
+		AudioSource audio = GetComponent<AudioSource>();
+
+		yield return new WaitForSeconds(audio.clip.length - 0.45f);
+		audio.clip = loop;
+		audio.Play();
+	}
+
 	public void setRunning() {
 		is_running = true;
+	}
+	public void unsetRunning() {
+		is_running = false;
 	}
 
 	public Queue<GameObject> getCircles () {

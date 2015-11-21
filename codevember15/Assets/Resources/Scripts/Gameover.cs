@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class Gameover : MonoBehaviour {
+	public GameObject gameOverBox;
 
 	// Use this for initialization
 	void Start () {
@@ -14,8 +15,12 @@ public class Gameover : MonoBehaviour {
 	}
 
 	public void PopupGameover () {
+
 		GameObject.Find("Circles").SetActive(false);
-		//TODO: GameObject enalbe with popup
+		GameObject.Find ("GameManager").GetComponent<GameLogic>().unsetRunning();
+
+		//TODO: GameObject enable with popup
+		gameOverBox.SetActive(true);
 		Debug.Log ("GameOver!");
 	}
 }
