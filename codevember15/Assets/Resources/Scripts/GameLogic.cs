@@ -22,12 +22,13 @@ public class GameLogic : MonoBehaviour {
 
 		if(is_running) {
 
-			//every frame wird circle erstellt
+			//every 100th frame create a circle
 			framecount++;
 			if(framecount % spawn_speed == 0) {
 
 				spawnCircle(); 
 
+				// increase speed
 				if(spawn_speed > 10)
 					spawn_speed -= 10;
 			}
