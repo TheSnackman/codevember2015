@@ -15,18 +15,21 @@ public class CirclesBehaviour : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+		
+		start_size = 43;
+		
+		GameObject canvas_screen = GameObject.Find("Canvas");
 		circle_transform = gameObject.GetComponent<RectTransform>();
-
-		//start_size = Random.Range(14, 64);
-		start_size = 55;
-
-		int width = Screen.width;
-		int height = Screen.height;
+		RectTransform canvas_transform = canvas_screen.GetComponent<RectTransform>();
+		
+		float width = canvas_transform.rect.width;
+		float height = canvas_transform.rect.height;
+		
 		int circleSize = 60;
-		circle_transform.Translate(-Random.Range(0, width)- circleSize, -Random.Range(0, height)- circleSize, 0, Space.World);
-		//circle_transform.Translate(Random.Range(0, width)-0.8f*width, Random.Range(0, height) -0.8f*height, 0, Space.World);
-		//Debug.Log((Random.Range(0, width)-0.5f*width )+ " " + (Random.Range(0, height) - 0.5f*height));
+		float x = Random.Range(-(width/2), width/2);
+		float y = Random.Range((-height/2), height/2);
+		
+		circle_transform.Translate(x, y, 0, Space.World);
 
 		gameObject.AddComponent<CircleCollider2D>();
 		circle_collider = gameObject.GetComponent<CircleCollider2D>();
