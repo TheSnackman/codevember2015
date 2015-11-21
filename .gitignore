@@ -4,6 +4,7 @@ codevember/Obj/
  
 *.csproj
 *.unityproj
+*.meta
 *.sln
 *.user
 *.userprefs
