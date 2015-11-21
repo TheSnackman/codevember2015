@@ -33,13 +33,6 @@ public class CirclesBehaviour : MonoBehaviour {
 		circle_collider.radius = start_size;
 	}
 
-	// Returns the current score when
-	// this circle is hit by user.
-	int getRevenue() {
-
-		return 0;
-	}
-
 	public void setNumber(int number) {
 
 		id = number;
@@ -56,7 +49,9 @@ public class CirclesBehaviour : MonoBehaviour {
 		gameObject.transform.localScale *= 1.01f;
 
 		lifetime++;
-		if (lifetime > 80)
-			Debug.Log ("dead");
+		if (lifetime > 80) {
+			Gameover go = GameObject.Find("GameManager").GetComponent<Gameover>();
+			go.PopupGameover();
+		}
 	}
 }

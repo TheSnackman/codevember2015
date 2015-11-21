@@ -10,17 +10,19 @@ public class Score : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         score = 0;
-        gameObject.SetActive(false);
+        GameObject.Find("GameManager").GetComponent<Score>().enabled = false;
 	}
     /**
     update score with 1 point according to game speed
     **/
-    void updateScroe(int speed) {
+    public void updateScore(int speed) {
         double factor = speed / 100;
         int newScore = (int) Math.Round(factor);
 
         score += newScore;
-        GameObject.Find("Score").GetComponent<Text>().text = score.ToString();
+        
+		// TODO: when UI element score is added, do this
+		//GameObject.Find("Score").GetComponent<Text>().text = score.ToString();
     }
 
     public int getScore() {

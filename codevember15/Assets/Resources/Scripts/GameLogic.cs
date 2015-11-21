@@ -9,11 +9,11 @@ public class GameLogic : MonoBehaviour {
 	Queue<GameObject> circles = new Queue<GameObject>();
 	int framecount = 0;
 	int circlecount = 0;
-	float spawn_speed = 70;
+	int spawn_speed = 70;
+	int next_spawn = 70;
 	bool is_running = false;
 	
 	public void setRunning() {
-		
 		is_running = true;
 	}
 
@@ -26,18 +26,20 @@ public class GameLogic : MonoBehaviour {
 
 		if(is_running) {
 			framecount++;
+
 			// create a new circle every spawn_speed frame
-			if(framecount % spawn_speed == 0) {
-
+			if(next_spawn == 0) {
 				spawnCircle();
-
-				if(spawn_speed > 50)
-					spawn_speed -= 1;
+				next_spawn = spawn_speed;
+				if (spawn_speed > 30)
+					spawn_speed--;
 			}
+
+			next_spawn--;
 
 			// check if there is a touchinput hitting
 			if (Input.touchCount == 1) {
-				Debug.Log ("touchinput");
+				//Debug.Log ("touchinput");
 				
 				//Vector3 pos = Camera.main.ViewportToScreenPoint(Input.GetTouch(0).position);
 				RaycastHit2D hit = Physics2D.Raycast(Input.GetTouch(0).position, Vector2.zero);
@@ -45,16 +47,22 @@ public class GameLogic : MonoBehaviour {
 				if(hit.collider != null){
 					//Debug.Log(hit.transform.gameObject.name);
 
-					// check wheter hit object is first one in queue
+					// check whether hit object is first one in queue
 					GameObject temp = circles.Dequeue();
 
 					if(temp.name.Equals(hit.transform.gameObject.name)) {
 						//Debug.Log("right one");
 						Destroy (hit.transform.gameObject);
 						// directly spawn new one
+						next_spawn = 0;
+						// get points
+						GameObject.Find("GameManager").GetComponent<Score>().updateScore(spawn_speed);
+						//Debug.Log(score);
 					}
 					else {
-						Debug.Log("wrong one");
+						// game over
+						Gameover go = GameObject.Find("GameManager").GetComponent<Gameover>();
+						go.PopupGameover();
 					}
 					
 					
