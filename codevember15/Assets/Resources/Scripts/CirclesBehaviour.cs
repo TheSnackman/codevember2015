@@ -16,7 +16,8 @@ public class CirclesBehaviour : MonoBehaviour {
 
 		circle_transform = gameObject.GetComponent<RectTransform>();
 
-		start_size = Random.Range(14, 64);
+		//start_size = Random.Range(14, 64);
+		start_size = 43;
 
 		int width = Screen.width;
 		int height = Screen.height;
@@ -45,11 +46,19 @@ public class CirclesBehaviour : MonoBehaviour {
 		}
 	}
 
-	void OnMouseDown() {
+	void Update() {
 
-		if (Input.GetKey ("mouse 0")) {
-			Destroy(gameObject);
-			Debug.Log("Circle has been clicked!");
+		if (Input.touchCount == 1) {
+
+			Debug.Log ("there is a touch");
+
+			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+			RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
+			if(hit.collider != null) {
+				Destroy (gameObject);
+			}
+				
 		}
 	}
+	
 }
