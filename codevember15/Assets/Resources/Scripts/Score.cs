@@ -20,11 +20,8 @@ public class Score : MonoBehaviour {
     /**
     update score with 1 point according to game speed
     **/
-    public void updateScore(int speed) {
-        double factor = speed / 100;
-        int newScore = (int) Math.Round(factor);
-
-        score += newScore;
+    public void updateScore(int toAdd) {
+        score += toAdd;
         
 		// TODO: when UI element score is added, do this
 		GameObject.Find("Score").GetComponent<Text>().text = "Score: " + score.ToString();
