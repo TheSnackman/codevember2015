@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class GameLogic : MonoBehaviour {
 	
 	public AudioClip loop;
+	bool loop_is_running = false;
 	public GameObject circles_container;
 	public GameObject scoring_field;
 	public GameObject menu_music;
@@ -41,6 +42,8 @@ public class GameLogic : MonoBehaviour {
 		yield return new WaitForSeconds(audio.clip.length - 0.45f);
 		audio.clip = loop;
 		audio.Play();
+		// update temp
+		loop_is_running = true;
 	}
 	
 	public void setRunning() {
@@ -116,12 +119,15 @@ public class GameLogic : MonoBehaviour {
 	}
 
 	public void spawnCircle() {
+		// TODO: don't spawn two above each other
 		circlecount++;
 		GameObject temp = Instantiate(Resources.Load("Prefabs/Circle", typeof(GameObject))) as GameObject;
 		temp.transform.SetParent(circles_container.transform);
 		temp.name = circlecount.ToString();
 		temp.GetComponent<CirclesBehaviour>().setNumber(circlecount);
 		circles.Enqueue(temp);
-		//Debug.Log(circles.Dequeue());
+		if (loop_is_running && circlecount % 5 == 0) {
+			GameObject.Find("GameManager").GetComponent<AudioSource>().pitch += 0.01f;
+		}
 	}
 }
