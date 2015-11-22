@@ -8,16 +8,29 @@ public class Gameover : MonoBehaviour {
 	public GameObject endscore;
 	public GameObject displayscore;
 
-	public void PopupGameover () {
+	IEnumerator WaitForMusic() {
 
         GameObject.Find("Circles").SetActive(false);
-        GameObject go = GameObject.Find("GameManager");
-        go.GetComponent<GameLogic>().unsetRunning();
+        GameObject gm = GameObject.Find("GameManager");
+        gm.GetComponent<GameLogic>().unsetRunning();
+
+		
+		GameObject mus = GameObject.Find ("Particles");
+		mus.GetComponent<AudioSource>().Play();
 
         gameOverBox.SetActive(true);
-        endscore.GetComponent<Text>().text = go.GetComponent<Score>().getScore().ToString();
+		endscore.GetComponent<Text>().text = gm.GetComponent<Score>().getScore().ToString();
+		GameObject replay = GameObject.Find ("Replay");
+		replay.SetActive(false);
+		yield return new WaitForSeconds(1.5f);
+		replay.SetActive(true);
 
         Debug.Log ("GameOver!");
+	}
+
+	public void PopupGameover () {
+		
+		StartCoroutine(WaitForMusic());
 	}
 
 	public void DestroyPopup() {
