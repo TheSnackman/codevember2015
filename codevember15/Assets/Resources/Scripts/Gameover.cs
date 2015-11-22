@@ -15,7 +15,8 @@ public class Gameover : MonoBehaviour {
 		GameObject.Find ("GameManager").GetComponent<GameLogic>().unsetRunning();
 		
 		gameOverBox.SetActive(true);
-		endscore.GetComponent<Text>().text = displayscore.GetComponent<Score>().getScore().ToString();
+		endscore.GetComponent<Text>().text = "123";
+		//endscore.GetComponent<Text>().text = displayscore.GetComponent<Score>().getScore().ToString();
 
 		Debug.Log ("GameOver!");
 	}

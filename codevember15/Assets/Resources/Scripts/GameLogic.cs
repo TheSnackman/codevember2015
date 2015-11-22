@@ -58,7 +58,7 @@ public class GameLogic : MonoBehaviour {
 				//Debug.Log ("touchinput");
 				
 				//Vector3 pos = Camera.main.ViewportToScreenPoint(Input.GetTouch(0).position);
-				RaycastHit2D hit = Physics2D.Raycast(Input.GetTouch(0).position, Vector2.zero);
+				RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position), Vector2.zero);
 				
 				if(hit.collider != null){
 					//Debug.Log(hit.transform.gameObject.name);
