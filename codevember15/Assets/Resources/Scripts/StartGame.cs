@@ -18,13 +18,16 @@ public class StartGame : MonoBehaviour {
 
 	// animation
 	IEnumerator WaitForAnimation() {
+		GameObject repeater = GameObject.Find("repeator");
 
 		if(!activated) {
-			buttonAnimated.GetComponent<Animator>().enabled = true;
-			buttonAnimated.GetComponent<Animator>().SetTime(0.0f);
-			buttonAnimated.GetComponent<Animator>().cullingMode = AnimatorCullingMode.AlwaysAnimate;
-			buttonAnimated.GetComponent<AudioSource>().Play ();
-			yield return new WaitForSeconds(1);
+			if(!repeater.GetComponent<repeatController>().new_round) {
+				buttonAnimated.GetComponent<Animator>().enabled = true;
+				buttonAnimated.GetComponent<Animator>().SetTime(0.0f);
+				buttonAnimated.GetComponent<Animator>().cullingMode = AnimatorCullingMode.AlwaysAnimate;
+				buttonAnimated.GetComponent<AudioSource>().Play ();
+				yield return new WaitForSeconds(1);
+			}
 			score.SetActive(true);
 			game_manager.GetComponent<GameLogic>().setRunning();
 		}

@@ -8,6 +8,7 @@ public class GameLogic : MonoBehaviour {
 	public GameObject circles_container;
 	public GameObject scoring_field;
 	public GameObject menu_music;
+	public GameObject repeator;
 	GameObject temp;
 	Queue<GameObject> circles = new Queue<GameObject>();
 	int framecount = 0;
@@ -15,7 +16,22 @@ public class GameLogic : MonoBehaviour {
 	int spawn_speed = 70;
 	int next_spawn = 70;
 	bool is_running = false;
-	
+
+	void Start() {
+
+		if(GameObject.Find("repeator") == null) {
+			repeator = new GameObject();
+			repeator.name = "repeator";
+			DontDestroyOnLoad(repeator);
+			repeator.AddComponent<repeatController>();
+		}
+		if(GameObject.Find("repeator") != null) 
+			repeator = GameObject.Find("repeator");
+
+		if(repeator.GetComponent<repeatController>().new_round)
+			gameObject.GetComponent<StartGame>().Run(false);
+	}
+
 	// play some music
 	IEnumerator GameMusicStart() {
 
@@ -28,6 +44,7 @@ public class GameLogic : MonoBehaviour {
 	}
 	
 	public void setRunning() {
+
 		is_running = true;
 		gameObject.AddComponent<Score>();
 		circles_container.SetActive(true);
@@ -78,12 +95,15 @@ public class GameLogic : MonoBehaviour {
 
 					if(temp.name.Equals(hit.transform.gameObject.name)) {
 						//Debug.Log("right one");
+						float score_factor = (CirclesBehaviour.max_lifetime - hit.transform.gameObject.GetComponent<CirclesBehaviour>().lifetime) / CirclesBehaviour.max_lifetime;
+						int score_to_add = (int) Mathf.Round(score_factor * circlecount);
+
 						Camera.main.GetComponent<AudioSource>().Play();
 						Destroy (hit.transform.gameObject);
 						// directly spawn new one
 						next_spawn = 0;
 						// get points
-						GameObject.Find("GameManager").GetComponent<Score>().updateScore(spawn_speed);
+						GameObject.Find("GameManager").GetComponent<Score>().updateScore(score_to_add);
 						//Debug.Log(score);
 					}
 					else {
@@ -99,11 +119,6 @@ public class GameLogic : MonoBehaviour {
 
 
 		}
-	}
-
-	public void ResetGame() {
-
-		//TODO: reset circles and destroy objects
 	}
 
 	public void spawnCircle() {
