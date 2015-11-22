@@ -77,13 +77,15 @@ public class GameLogic : MonoBehaviour {
 		if(is_running) {
 			framecount++;
 
-			// create a new circle every spawn_speed frame
+			// create a new circle
 			if(next_spawn == 0) {
 				spawnCircle();
 				next_spawn = spawn_speed;
-				if (spawn_speed > 30)
-					spawn_speed--;
 			}
+
+			// increase difficulty
+			if(framecount % 60 == 0 && spawn_speed > 30)
+				spawn_speed--;
 
 			next_spawn--;
 
@@ -104,7 +106,7 @@ public class GameLogic : MonoBehaviour {
 					
 						// get points
 						GameObject.Find("GameManager").GetComponent<Score>().updateScore(
-							(int) Mathf.Round(circlecount * score_factor * 2)
+							(int) Mathf.Round(circlecount * score_factor)
 						);
 
 						Camera.main.GetComponent<AudioSource>().Play();
