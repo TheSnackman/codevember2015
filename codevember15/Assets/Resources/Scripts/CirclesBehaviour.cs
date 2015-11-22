@@ -7,7 +7,8 @@ public class CirclesBehaviour : MonoBehaviour {
 	
 	int id;
 	int val;
-	int lifetime = 0;
+	public int lifetime = 0;
+	public static int max_lifetime = 80;
 	float start_size;
 	float max_size;
 	RectTransform circle_transform;

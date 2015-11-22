@@ -8,7 +8,6 @@ public class Gameover : MonoBehaviour {
 	public GameObject endscore;
 	public GameObject displayscore;
 
-
 	public void PopupGameover () {
 
         GameObject.Find("Circles").SetActive(false);
@@ -22,9 +21,12 @@ public class Gameover : MonoBehaviour {
 	}
 
 	public void DestroyPopup() {
+		GameObject repeater = GameObject.Find("repeator");
+		repeater.GetComponent<repeatController>().new_round = true;
+
 		Application.LoadLevel("superScene");
-		GameObject.Find ("GameManager").GetComponent<GameLogic>().setRunning();
-		gameOverBox.SetActive(false);
+		//GameObject.Find ("GameManager").GetComponent<GameLogic>().setRunning();
+		//gameOverBox.SetActive(false);
 	}
 }
 
