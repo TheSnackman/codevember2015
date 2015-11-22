@@ -29,6 +29,28 @@ public class CirclesBehaviour : MonoBehaviour {
 		int circleSize = 60;
 		float x = Random.Range(-(width/2), width/2);
 		float y = Random.Range((-height/2), height/2);
+
+		/*
+		float x = 0.0f;
+		float y = 0.0f;
+		// check if circles overlay
+		bool overlay = true;
+		while (overlay) {
+			overlay = false;
+			x = Random.Range(-(width/2), width/2);
+			y = Random.Range((-height/2), height/2);
+
+			Queue<GameObject> circles = GameObject.Find("GameManager").GetComponent<GameLogic>().getCircles();
+			foreach(GameObject circle in circles) {
+				// check if position collides
+				Vector3 pos = circle.GetComponent<RectTransform>().position;
+				if(Mathf.Abs(x-pos.x) < 60)
+					overlay = true;
+				if(Mathf.Abs(y-pos.y) < 60)
+					overlay = true;
+			}
+			Debug.Log(x + " | " + y);
+		}*/
 		
 		circle_transform.Translate(x, y, 0, Space.World);
 
