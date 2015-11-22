@@ -20,4 +20,10 @@ public class Gameover : MonoBehaviour {
 
 		Debug.Log ("GameOver!");
 	}
+
+	public void DestroyPopup() {
+		Application.LoadLevel("superScene");
+		GameObject.Find ("GameManager").GetComponent<GameLogic>().setRunning();
+		gameOverBox.SetActive(false);
+	}
 }

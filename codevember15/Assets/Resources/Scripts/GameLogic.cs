@@ -7,6 +7,7 @@ public class GameLogic : MonoBehaviour {
 	public AudioClip loop;
 	public GameObject circles_container;
 	public GameObject scoring_field;
+	public GameObject menu_music;
 	GameObject temp;
 	Queue<GameObject> circles = new Queue<GameObject>();
 	int framecount = 0;
@@ -14,23 +15,32 @@ public class GameLogic : MonoBehaviour {
 	int spawn_speed = 70;
 	int next_spawn = 70;
 	bool is_running = false;
-
+	
 	// play some music
-	IEnumerator Start() {
+	IEnumerator GameMusicStart() {
 
+		menu_music.GetComponent<AudioSource>().Stop();
 		AudioSource audio = GetComponent<AudioSource>();
-
+		audio.Play();
 		yield return new WaitForSeconds(audio.clip.length - 0.45f);
 		audio.clip = loop;
 		audio.Play();
 	}
-
+	
 	public void setRunning() {
 		is_running = true;
 		gameObject.AddComponent<Score>();
+		circles_container.SetActive(true);
+		StartCoroutine(GameMusicStart());
 	}
+	
 	public void unsetRunning() {
+
 		is_running = false;
+		AudioSource audio = GetComponent<AudioSource>();
+		audio.Stop();
+		menu_music.GetComponent<AudioSource>().Play();
+		//circles_container.SetActive(false);
 	}
 
 	public Queue<GameObject> getCircles () {
@@ -89,6 +99,11 @@ public class GameLogic : MonoBehaviour {
 
 
 		}
+	}
+
+	public void ResetGame() {
+
+		//TODO: reset circles and destroy objects
 	}
 
 	public void spawnCircle() {
