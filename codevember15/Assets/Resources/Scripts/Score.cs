@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 public class Score : MonoBehaviour {
 
     private int score;
-    private string file_name = "scoreTable.dat";
+    //private string file_name = "scoreTable.dat";
     private int bestScore;
 
 	// Use this for initialization
@@ -25,7 +25,6 @@ public class Score : MonoBehaviour {
     public void updateScore(int toAdd) {
         score += toAdd;
         
-		// TODO: when UI element score is added, do this
 		GameObject.Find("Score").GetComponent<Text>().text = "Score: " + score.ToString();
     }
 
@@ -98,47 +97,48 @@ public class Score : MonoBehaviour {
 //        // update list is necessary
 //        writeScoreTable(highscoreTable);
     }
+	public int getScore() {
+		return score;
+	}
 
     public int getBestScore() {
         return bestScore;
     }
 
-    private void writeScoreTable(List<ScoreRow> tableRows) {
-        System.IO.StreamWriter fileWriter = new System.IO.StreamWriter(file_name);
-        
-        foreach (ScoreRow row in tableRows) {
-            fileWriter.WriteLine(row.ToString());
-        }
+//    private void writeScoreTable(List<ScoreRow> tableRows) {
+//        System.IO.StreamWriter fileWriter = new System.IO.StreamWriter(file_name);
+//        
+//        foreach (ScoreRow row in tableRows) {
+//            fileWriter.WriteLine(row.ToString());
+//        }
+//
+//        fileWriter.Close();
+//    }
 
-        fileWriter.Close();
-    }
 
-    public int getScore() {
-        return score;
-    }
 
-    class ScoreRow {
-        public int id;
-        int score;
-        string timestamp;
-
-        public ScoreRow(int id, int score, string timestamp) {
-            this.id = id;
-            this.score = score;
-            this.timestamp = timestamp;
-        }
-
-        public void updateRow(int score, string timestamp) {
-            this.score = score;
-            this.timestamp = timestamp;
-        }
-
-        public bool isBetter(int otherScore) {
-            return otherScore > this.score;
-        }
-
-        public string ToString() {
-            return timestamp + " " + score;
-        }
-    }
+//    class ScoreRow {
+//        public int id;
+//        int score;
+//        string timestamp;
+//
+//        public ScoreRow(int id, int score, string timestamp) {
+//            this.id = id;
+//            this.score = score;
+//            this.timestamp = timestamp;
+//        }
+//
+//        public void updateRow(int score, string timestamp) {
+//            this.score = score;
+//            this.timestamp = timestamp;
+//        }
+//
+//        public bool isBetter(int otherScore) {
+//            return otherScore > this.score;
+//        }
+//
+//        public string ToString() {
+//            return timestamp + " " + score;
+//        }
+//    }
 }

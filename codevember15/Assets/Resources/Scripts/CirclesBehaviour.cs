@@ -4,8 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class CirclesBehaviour : MonoBehaviour {
-	
-	int id;
+
 	int val;
 	public int lifetime = 0;
 	public static int max_lifetime = 80;
@@ -25,8 +24,7 @@ public class CirclesBehaviour : MonoBehaviour {
 		
 		float width = canvas_transform.rect.width;
 		float height = canvas_transform.rect.height;
-		
-		int circleSize = 60;
+
 		float x = Random.Range(-(width/2), width/2);
 		float y = Random.Range((-height/2), height/2);
 
@@ -61,7 +59,6 @@ public class CirclesBehaviour : MonoBehaviour {
 
 	public void setNumber(int number) {
 
-		id = number;
 		gameObject.name = number.ToString();
 		
 		foreach (Transform child in transform) {

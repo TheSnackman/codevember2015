@@ -6,6 +6,7 @@ public class GameLogic : MonoBehaviour {
 	
 	public AudioClip loop;
 	bool loop_is_running = false;
+	bool gameover = false;
 	public GameObject circles_container;
 	public GameObject scoring_field;
 	public GameObject menu_music;
@@ -35,19 +36,19 @@ public class GameLogic : MonoBehaviour {
 
 	// play some music
 	IEnumerator GameMusicStart() {
-
 		menu_music.GetComponent<AudioSource>().Stop();
 		AudioSource audio = GetComponent<AudioSource>();
 		audio.Play();
 		yield return new WaitForSeconds(audio.clip.length - 0.45f);
-		audio.clip = loop;
-		audio.Play();
+		if (!gameover) {
+			audio.clip = loop;
+			audio.Play ();
+		}
 		// update temp
 		loop_is_running = true;
 	}
 	
 	public void setRunning() {
-
 		is_running = true;
 		gameObject.AddComponent<Score>();
 		circles_container.SetActive(true);
@@ -55,16 +56,15 @@ public class GameLogic : MonoBehaviour {
 	}
 	IEnumerator WaitForMusic() {
 		yield return new WaitForSeconds(0.5f);
+		gameover = true;
 		menu_music.GetComponent<AudioSource> ().Play ();
 	}
 	public void unsetRunning() {
-
 		is_running = false;
 		AudioSource audio = GetComponent<AudioSource>();
 		audio.Stop();
-		//wait for Musik Popped
+		//wait for Popped Sound to finish .. .so delay Menu Music
 		StartCoroutine (WaitForMusic ());
-		//circles_container.SetActive(false);
 	}
 
 	public Queue<GameObject> getCircles () {
@@ -106,7 +106,7 @@ public class GameLogic : MonoBehaviour {
 					
 						// get points
 						GameObject.Find("GameManager").GetComponent<Score>().updateScore(
-							(int) Mathf.Round(circlecount * score_factor)
+							(int) Mathf.Round(circlecount * score_factor*1.5f)
 						);
 
 						Camera.main.GetComponent<AudioSource>().Play();
