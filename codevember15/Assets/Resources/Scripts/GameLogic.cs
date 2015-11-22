@@ -91,33 +91,27 @@ public class GameLogic : MonoBehaviour {
 					//Debug.Log(hit.transform.gameObject.name);
 
 					// check whether hit object is first one in queue
-					GameObject temp = circles.Dequeue();
-
-					if(temp.name.Equals(hit.transform.gameObject.name)) {
+					if(circles.Dequeue().name.Equals(hit.transform.gameObject.name)) {
 						//Debug.Log("right one");
-						float score_factor = (CirclesBehaviour.max_lifetime - hit.transform.gameObject.GetComponent<CirclesBehaviour>().lifetime) / CirclesBehaviour.max_lifetime;
-						int score_to_add = (int) Mathf.Round(score_factor * circlecount);
+						float score_factor = (CirclesBehaviour.max_lifetime - hit.transform.gameObject.GetComponent<CirclesBehaviour>().lifetime * 1.0f) / CirclesBehaviour.max_lifetime;
+					
+						// get points
+						GameObject.Find("GameManager").GetComponent<Score>().updateScore(
+							(int) Mathf.Round(circlecount * score_factor * 2)
+						);
 
 						Camera.main.GetComponent<AudioSource>().Play();
 						Destroy (hit.transform.gameObject);
 						// directly spawn new one
 						next_spawn = 0;
-						// get points
-						GameObject.Find("GameManager").GetComponent<Score>().updateScore(score_to_add);
-						//Debug.Log(score);
 					}
 					else {
 						// game over
 						Gameover go = GameObject.Find("GameManager").GetComponent<Gameover>();
 						go.PopupGameover();
 					}
-					
-					
 				}
-				
 			}
-
-
 		}
 	}
 
