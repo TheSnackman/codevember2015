@@ -6,6 +6,7 @@ public class GameLogic : MonoBehaviour {
 	
 	public AudioClip loop;
 	public GameObject circles_container;
+	public GameObject scoring_field;
 	GameObject temp;
 	Queue<GameObject> circles = new Queue<GameObject>();
 	int framecount = 0;
@@ -26,6 +27,7 @@ public class GameLogic : MonoBehaviour {
 
 	public void setRunning() {
 		is_running = true;
+		gameObject.AddComponent<Score>();
 	}
 	public void unsetRunning() {
 		is_running = false;
@@ -66,6 +68,7 @@ public class GameLogic : MonoBehaviour {
 
 					if(temp.name.Equals(hit.transform.gameObject.name)) {
 						//Debug.Log("right one");
+						Camera.main.GetComponent<AudioSource>().Play();
 						Destroy (hit.transform.gameObject);
 						// directly spawn new one
 						next_spawn = 0;
