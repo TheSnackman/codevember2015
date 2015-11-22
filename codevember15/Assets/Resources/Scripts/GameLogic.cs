@@ -53,13 +53,17 @@ public class GameLogic : MonoBehaviour {
 		circles_container.SetActive(true);
 		StartCoroutine(GameMusicStart());
 	}
-	
+	IEnumerator WaitForMusic() {
+		yield return new WaitForSeconds(0.5f);
+		menu_music.GetComponent<AudioSource> ().Play ();
+	}
 	public void unsetRunning() {
 
 		is_running = false;
 		AudioSource audio = GetComponent<AudioSource>();
 		audio.Stop();
-		menu_music.GetComponent<AudioSource>().Play();
+		//wait for Musik Popped
+		StartCoroutine (WaitForMusic ());
 		//circles_container.SetActive(false);
 	}
 

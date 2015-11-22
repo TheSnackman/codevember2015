@@ -20,9 +20,9 @@ public class Gameover : MonoBehaviour {
 
         gameOverBox.SetActive(true);
 		endscore.GetComponent<Text>().text = gm.GetComponent<Score>().getScore().ToString();
-		GameObject replay = GameObject.Find ("Replay");
+		GameObject replay = GameObject.Find ("GameOverBox");
 		replay.SetActive(false);
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(0.8f);
 		replay.SetActive(true);
 
         Debug.Log ("GameOver!");
