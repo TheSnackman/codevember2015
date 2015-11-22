@@ -11,14 +11,14 @@ public class Gameover : MonoBehaviour {
 
 	public void PopupGameover () {
 
-		GameObject.Find("Circles").SetActive(false);
-		GameObject.Find ("GameManager").GetComponent<GameLogic>().unsetRunning();
-		
-		gameOverBox.SetActive(true);
-		endscore.GetComponent<Text>().text = "123";
-		//endscore.GetComponent<Text>().text = displayscore.GetComponent<Score>().getScore().ToString();
+        GameObject.Find("Circles").SetActive(false);
+        GameObject go = GameObject.Find("GameManager");
+        go.GetComponent<GameLogic>().unsetRunning();
 
-		Debug.Log ("GameOver!");
+        gameOverBox.SetActive(true);
+        endscore.GetComponent<Text>().text = go.GetComponent<Score>().getScore().ToString();
+
+        Debug.Log ("GameOver!");
 	}
 
 	public void DestroyPopup() {
@@ -27,3 +27,4 @@ public class Gameover : MonoBehaviour {
 		gameOverBox.SetActive(false);
 	}
 }
+
