@@ -7,8 +7,9 @@ public class Gameover : MonoBehaviour {
 	public GameObject gameOverBox;
 	public GameObject endscore;
 	public GameObject displayscore;
+    public GameObject bestscore;
 
-	IEnumerator WaitForMusic() {
+    IEnumerator WaitForMusic() {
 
         GameObject.Find("Circles").SetActive(false);
         GameObject gm = GameObject.Find("GameManager");
@@ -19,7 +20,10 @@ public class Gameover : MonoBehaviour {
 		mus.GetComponent<AudioSource>().Play();
 
         gameOverBox.SetActive(true);
-		endscore.GetComponent<Text>().text = gm.GetComponent<Score>().getScore().ToString();
+        gm.GetComponent<Score>().onGameOver();
+
+        bestscore.GetComponent<Text>().text = gm.GetComponent<Score>().getBestScore().ToString();
+        endscore.GetComponent<Text>().text = gm.GetComponent<Score>().getScore().ToString();
 		GameObject replay = GameObject.Find ("GameOverBox");
 		replay.SetActive(false);
 		yield return new WaitForSeconds(0.8f);
@@ -42,4 +46,5 @@ public class Gameover : MonoBehaviour {
 		//gameOverBox.SetActive(false);
 	}
 }
+
 
