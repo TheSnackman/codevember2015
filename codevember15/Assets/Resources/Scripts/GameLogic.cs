@@ -10,7 +10,7 @@ public class GameLogic : MonoBehaviour {
 	public GameObject circles_container;
 	public GameObject scoring_field;
 	public GameObject menu_music;
-	public GameObject repeator;
+	GameObject repeator;
 	GameObject temp;
 	Queue<GameObject> circles = new Queue<GameObject>();
 	int framecount = 0;

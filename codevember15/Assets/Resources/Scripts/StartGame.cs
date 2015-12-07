@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class StartGame : MonoBehaviour {
 
+	public Button strtBtn;
 	public GameObject menu;
 	public GameObject game_manager;
 	public GameObject score;
@@ -36,7 +38,7 @@ public class StartGame : MonoBehaviour {
 
 	// starts the game if active = false
 	public void Run(bool active) {
-
+		strtBtn.interactable = false;
 		activated = active;
 		StartCoroutine(WaitForAnimation());
 	}
