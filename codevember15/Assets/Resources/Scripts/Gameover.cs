@@ -12,37 +12,36 @@ public class Gameover : MonoBehaviour {
     IEnumerator WaitForMusic() {
 
         GameObject.Find("Circles").SetActive(false);
-        GameObject gm = GameObject.Find("GameManager");
-        gm.GetComponent<GameLogic>().unsetRunning();
+        gameObject.GetComponent<GameLogic>().unsetRunning();
 
 		
 		GameObject mus = GameObject.Find ("Particles");
 		mus.GetComponent<AudioSource>().Play();
 
         gameOverBox.SetActive(true);
-        gm.GetComponent<Score>().onGameOver();
+		gameObject.GetComponent<Score>().onGameOver();
 
-        bestscore.GetComponent<Text>().text = gm.GetComponent<Score>().getBestScore().ToString();
-        endscore.GetComponent<Text>().text = gm.GetComponent<Score>().getScore().ToString();
+		bestscore.GetComponent<Text>().text = gameObject.GetComponent<Score>().getBestScore().ToString();
+		endscore.GetComponent<Text>().text = gameObject.GetComponent<Score>().getScore().ToString();
 		GameObject GOBox = GameObject.Find ("GameOverBox");
 		GOBox.SetActive(false);
 		yield return new WaitForSeconds(0.8f);
 		GOBox.SetActive(true);
 
 		//gold
-		if (gm.GetComponent<Score> ().getScore () >= 5000) {
+		if (gameObject.GetComponent<Score> ().getScore () >= 5000) {
 			GameObject.Find ("bronze").SetActive (false);
 			GameObject.Find ("silber").SetActive (false);
 			GameObject.Find ("gold").SetActive (true);
 		}
 		//silber
-		else if (gm.GetComponent<Score> ().getScore () >= 2500 && gm.GetComponent<Score> ().getScore () < 5000) {
+		else if (gameObject.GetComponent<Score> ().getScore () >= 2500 && gameObject.GetComponent<Score> ().getScore () < 5000) {
 			GameObject.Find ("bronze").SetActive (false);
 			GameObject.Find ("silber").SetActive (true);
 			GameObject.Find ("gold").SetActive (false);
 		}
 		//bronze
-		else if (gm.GetComponent<Score> ().getScore () >= 1250 && gm.GetComponent<Score> ().getScore () < 2500) {
+		else if (gameObject.GetComponent<Score> ().getScore () >= 1250 && gameObject.GetComponent<Score> ().getScore () < 2500) {
 			GameObject.Find ("bronze").SetActive (true);
 			GameObject.Find ("silber").SetActive (false);
 			GameObject.Find ("gold").SetActive (false);

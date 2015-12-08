@@ -18,6 +18,9 @@ public class GameLogic : MonoBehaviour {
 	int spawn_speed = 70;
 	int next_spawn = 70;
 	bool is_running = false;
+	public GameObject canvas_screen;
+	Vector3 newPos;
+
 
 	void Start() {
 
@@ -105,7 +108,7 @@ public class GameLogic : MonoBehaviour {
 						float score_factor = (CirclesBehaviour.max_lifetime - hit.transform.gameObject.GetComponent<CirclesBehaviour>().lifetime * 1.0f) / CirclesBehaviour.max_lifetime;
 					
 						// get points
-						GameObject.Find("GameManager").GetComponent<Score>().updateScore(
+						gameObject.GetComponent<Score>().updateScore(
 							(int) Mathf.Round(circlecount * score_factor*1.5f)
 						);
 
@@ -116,8 +119,7 @@ public class GameLogic : MonoBehaviour {
 					}
 					else {
 						// game over
-						Gameover go = GameObject.Find("GameManager").GetComponent<Gameover>();
-						go.PopupGameover();
+						gameObject.GetComponent<Gameover>().PopupGameover();
 					}
 				}
 			}
@@ -125,15 +127,46 @@ public class GameLogic : MonoBehaviour {
 	}
 
 	public void spawnCircle() {
-		// TODO: don't spawn two above each other
-		circlecount++;
+
+		RectTransform canvas_transform = canvas_screen.GetComponent<RectTransform> ();
+		float width = canvas_transform.rect.width;
+		float height = canvas_transform.rect.height;
+
+		bool overlay = true;
+		while(overlay) {
+			overlay=false;
+
+			float x = Random.Range (-(width / 2), width / 2);
+			float y = Random.Range ((-height / 2), height / 2);
+			newPos = new Vector3 (x, y, 0);
+
+			foreach (GameObject circle in circles) {
+				circle.transform.position = new Vector3 (circle.transform.position.x,circle.transform.position.y, 0);
+				//Debug.Log(circle.transform.position);
+				float circle_collider_radius = circle.GetComponent<CircleCollider2D> ().radius;
+				//if ((newPos - circle.transform.position).magnitude > circle_collider_radius + circle.GetComponent<CirclesBehaviour> ().srt_size) {
+				//coliision
+				if(Mathf.Abs(newPos.x - circle.transform.position.x) < circle_collider_radius + circle.GetComponent<CirclesBehaviour> ().srt_size
+				   && Mathf.Abs(newPos.y - circle.transform.position.y) < circle_collider_radius + circle.GetComponent<CirclesBehaviour> ().srt_size){
+					overlay = true;
+					Debug.Log(newPos + "new vs old " + circle.transform.position);
+					Debug.Log("COLLISION XY" + Mathf.Abs(newPos.x - circle.transform.position.x));
+					break;
+				}
+			}
+		}
+
 		GameObject temp = Instantiate(Resources.Load("Prefabs/Circle", typeof(GameObject))) as GameObject;
 		temp.transform.SetParent(circles_container.transform);
 		temp.name = circlecount.ToString();
+		
+		temp.GetComponent<CirclesBehaviour> ().SpawnCircle (newPos);
+
+		circlecount++;
 		temp.GetComponent<CirclesBehaviour>().setNumber(circlecount);
 		circles.Enqueue(temp);
 		if (loop_is_running && circlecount % 5 == 0) {
-			GameObject.Find("GameManager").GetComponent<AudioSource>().pitch += 0.01f;
+			gameObject.GetComponent<AudioSource>().pitch += 0.01f;
 		}
 	}
 }
